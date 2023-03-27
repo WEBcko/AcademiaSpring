@@ -1,5 +1,6 @@
 package br.com.webcko.academia.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +11,12 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "clientes", schema = "public")
-public class Cliente extends AbstractEntity {
+public class Cliente extends Usuario {
 
-    @Getter @Setter
-    @OneToOne
-    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
-    private Usuario usuario;
+//    @Getter @Setter
+//    @OneToOne
+//    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
+//    private Usuario usuario;
 
     @Getter @Setter
     @Column(name = "peso", nullable = false)
