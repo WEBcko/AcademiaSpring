@@ -11,7 +11,12 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "clientes", schema = "public")
-public class Cliente extends Usuario {
+public class Cliente extends AbstractEntity {
+
+    @Getter @Setter
+    @Column(name = "id_usuario", nullable = false, unique = true)
+    private Long idUsuario;
+
 
     @Getter @Setter
     @Column(name = "peso", nullable = false)

@@ -10,7 +10,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "perso_anais", schema = "public")
-public class Personal extends Usuario{
+public class Personal extends AbstractEntity{
+
+    @Getter @Setter
+    @Column(name = "id_usuario", nullable = false, unique = true)
+    private Long idUsuario;
 
     @Getter @Setter
     @Column(name = "alunos", nullable = false)
