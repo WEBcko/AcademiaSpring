@@ -8,6 +8,8 @@ import lombok.Setter;
 @Table(name = "usuarios", schema = "public")
 public class Usuario extends AbstractEntity {
 
+
+
         @Getter @Setter
         @Column(name = "nome", nullable = false, length = 100)
         private String nome;
