@@ -1,8 +1,6 @@
 package br.com.webcko.academia.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,11 +12,13 @@ public class EntradaSaida extends AbstractEntity {
 
 
     @Getter @Setter
-    @Column(name = "cliente", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "cliente", nullable = false)
     private Cliente cliente;
 
     @Getter @Setter
-    @Column(name = "personal", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "personal", nullable = false)
     private Personal personal;
 
     @Getter @Setter

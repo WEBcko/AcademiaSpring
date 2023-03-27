@@ -3,7 +3,7 @@ package br.com.webcko.academia.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-
+@MappedSuperclass
 public abstract class AbstractEntity {
 
         @Id

@@ -1,12 +1,11 @@
 package br.com.webcko.academia.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.lang.Long;
 import java.time.LocalDate;
 
 @Entity
@@ -14,9 +13,9 @@ import java.time.LocalDate;
 public class Cliente extends AbstractEntity {
 
     @Getter @Setter
-    @Column(name = "id_usuario", nullable = false, unique = true)
-    private Long idUsuario;
-
+    @OneToOne
+    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
+    private Usuario usuario;
 
     @Getter @Setter
     @Column(name = "peso", nullable = false)
@@ -28,14 +27,14 @@ public class Cliente extends AbstractEntity {
 
     @Getter @Setter
     @Column(name = "cep", nullable = false, length = 10)
-    private int cep;
+    private String cep;
 
     @Getter @Setter
-    @Column(name = "numero_casa", nullable = false, length = 10)
+    @Column(name = "numero_casa", nullable = false)
     private int numeroCasa;
 
     @Getter @Setter
-    @Column(name = "data_nascimento", nullable = false)
+    @Column(name = "data_nascimento", nullable = false, columnDefinition = "DATE")
     private LocalDate dataNascimento;
 
 }

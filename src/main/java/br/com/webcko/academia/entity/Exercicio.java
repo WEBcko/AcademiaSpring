@@ -8,8 +8,7 @@ import lombok.Setter;
 @Table(name = "exercicios", schema = "public")
 public class Exercicio extends AbstractEntity{
 
-    @Getter
-    @Setter
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "grupo_muscular", nullable = false)
     private GrupoMuscular grupoMuscular;
