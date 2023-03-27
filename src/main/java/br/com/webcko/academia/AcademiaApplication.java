@@ -13,8 +13,8 @@ public class AcademiaApplication {
 		SpringApplication.run(AcademiaApplication.class, args);
 	}
 
-	@GetMapping("/")
-	public String hello() {
-		return String.format("Hello WORLD! :D");
-	}
+//	@GetMapping("/")
+//	public String hello() {
+//		return String.format("Hello WORLD! :D");
+//	}
 }
