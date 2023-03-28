@@ -8,30 +8,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "personais", schema = "public")
-public class Personal extends AbstractEntity{
+public class Personal extends Usuario {
 
     @Getter @Setter
-    @OneToOne
-    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
-    private Usuario usuario;
-
-    @Getter @Setter
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "personal_cliente",
-            uniqueConstraints = @UniqueConstraint(
-                    columnNames = {
-                            "personal_id",
-                            "cliente_id"
-                    }
-            ),
-            joinColumns = @JoinColumn(
-                    name = "personal_id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "cliente_id"
-            )
-    )
-    private List<Cliente> alunos;
+    @Column(name = "admin", nullable = false)
+    private boolean admin;
 
 
 }

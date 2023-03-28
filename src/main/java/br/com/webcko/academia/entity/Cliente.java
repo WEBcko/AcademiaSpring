@@ -13,10 +13,6 @@ import java.time.LocalDate;
 @Table(name = "clientes", schema = "public")
 public class Cliente extends Usuario {
 
-//    @Getter @Setter
-//    @OneToOne
-//    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
-//    private Usuario usuario;
 
     @Getter @Setter
     @Column(name = "peso", nullable = false)
