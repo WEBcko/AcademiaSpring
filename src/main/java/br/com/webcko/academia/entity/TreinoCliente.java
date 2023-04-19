@@ -8,7 +8,6 @@ import lombok.extern.apachecommons.CommonsLog;
 
 @Entity
 public class TreinoCliente {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id", nullable = false)
@@ -20,7 +19,7 @@ public class TreinoCliente {
     //@JoinColumn(name = "treino_id")
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "treinos_clientes",
-        joinColumns = @JoinColumn(name = "treino_id"),
+            joinColumns = @JoinColumn(name = "treino_id"),
             inverseJoinColumns = @JoinColumn(name = "treino_cliente_id")
     )
     private Treino treino;
@@ -39,6 +38,5 @@ public class TreinoCliente {
     @Setter
     @Column(name = "repeticoes")
     private Integer repeticoes;
-
 
 }
