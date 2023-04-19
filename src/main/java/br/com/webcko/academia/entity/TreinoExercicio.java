@@ -1,13 +1,11 @@
 package br.com.webcko.academia.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "treinos_exercicios", schema = "public")
 public class TreinoExercicio extends AbstractEntity {
 
     @Getter
