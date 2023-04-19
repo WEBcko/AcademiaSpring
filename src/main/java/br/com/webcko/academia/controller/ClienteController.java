@@ -64,7 +64,7 @@ public class ClienteController {
     public ResponseEntity<Object> Delete(@PathVariable(value = "id")Long id){
         Optional<Cliente> cliente = _clienteRepository.findById(id);
         if(cliente.isPresent()){
-            _clienteRepository.delete(cliente);
+            _clienteRepository.delete(cliente.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
