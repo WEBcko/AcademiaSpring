@@ -11,13 +11,13 @@ public class TreinoExercicio extends AbstractEntity {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "id_treino")
+    @JoinColumn(name = "id_treino", nullable = false)
     private Treino id_treino;
 
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "id_exercicio")
+    @JoinColumn(name = "id_exercicio", nullable = false)
     private Exercicio id_exercicio;
 
     @Getter
