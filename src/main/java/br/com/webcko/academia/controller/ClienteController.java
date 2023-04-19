@@ -39,7 +39,7 @@ public class ClienteController {
     }
 
     @RequestMapping(value = "/cliente/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Cliente> Put(@PathVariable(value = "id") Long id, @Valid @RequestBody Cliente newCliente)
+    public ResponseEntity<?> Put(@PathVariable(value = "id") Long id, @Valid @RequestBody Cliente newCliente)
     {
         Optional<Cliente> oldCliente = _clienteRepository.findById(id);
         System.out.println(oldCliente.get());
@@ -64,7 +64,7 @@ public class ClienteController {
     public ResponseEntity<Object> Delete(@PathVariable(value = "id")Long id){
         Optional<Cliente> cliente = _clienteRepository.findById(id);
         if(cliente.isPresent()){
-            _clienteRepository.delete(cliente.get());
+            _clienteRepository.delete(cliente);
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
