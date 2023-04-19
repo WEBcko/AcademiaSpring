@@ -20,7 +20,11 @@ public abstract class Usuario extends AbstractEntity {
         private String cpf;
 
         @Getter @Setter
-        @Column(name = "email", nullable = false, length = 100)
+        @Column(name = "email", nullable = false, length = 100, unique = true)
         private String email;
+
+        @Getter @Setter
+        @Column(name = "senha", nullable = false, length = 100)
+        private String senha;
 
 }
