@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "entradas_saidas", schema = "public")
 public class EntradaSaida extends AbstractEntity {
 
-
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "cliente", nullable = false)
