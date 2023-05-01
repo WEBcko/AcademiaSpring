@@ -10,14 +10,14 @@ import java.util.List;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    public List<Cliente> findByNome(final String nome);
+    //public List<Cliente> findByNome(final String nome);
 
-    //buscando da forma customizada
-    @Query("from Modelo whre nome like :nome")
-    public  List<Cliente> findByNomeLike (@Param("nome") final String nome);
-
-    //buscando da forma nativa customizada
-    @Query(value = "select * from modelos where nome like :nome", nativeQuery = true)
-    public  List<Cliente> findByNomeLikeNative (@Param("nome") final String nome);
+//    //buscando da forma customizada
+//    @Query("from Modelo whre nome like :nome")
+//    public  List<Cliente> findByNomeLike (@Param("nome") final String nome);
+//
+//    //buscando da forma nativa customizada
+//    @Query(value = "select * from modelos where nome like :nome", nativeQuery = true)
+//    public  List<Cliente> findByNomeLikeNative (@Param("nome") final String nome);
 
 }
