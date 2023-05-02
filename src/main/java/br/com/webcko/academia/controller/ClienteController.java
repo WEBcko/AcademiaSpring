@@ -24,12 +24,14 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findByIdParam (@RequestParam("id") final Long id){
+    public ResponseEntity<?> findByIdParam (@PathVariable final Long id){
         final Cliente cliente = this.clienteRepository.findById(id).orElse(null);
 
         return cliente == null
                 ? ResponseEntity.badRequest().body("Nenhum error encontrado.")
                 : ResponseEntity.ok(cliente);
+
+
     }
 
     @GetMapping("/lista")
@@ -37,6 +39,15 @@ public class ClienteController {
         return ResponseEntity.ok(this.clienteRepository.findAll());
     }
 
+
+    @GetMapping("/ativos")
+    public ResponseEntity<?> buscarAtivos (){
+        try{
+            return ResponseEntity.ok(this.clienteRepository.findClienteByAtivo());
+        }catch(RuntimeException e){
+            return ResponseEntity.badRequest().body("Error " + e.getMessage());
+        }
+    }
 
     @PostMapping
     public ResponseEntity<?> cadastrar (@RequestBody final Cliente cliente){

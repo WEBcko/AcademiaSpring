@@ -20,4 +20,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 //    @Query(value = "select * from modelos where nome like :nome", nativeQuery = true)
 //    public  List<Cliente> findByNomeLikeNative (@Param("nome") final String nome);
 
+
+    @Query("from Cliente where ativo = true")
+    public List<Cliente> findClienteByAtivo ();
 }
