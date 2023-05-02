@@ -23,5 +23,7 @@ public abstract class AbstractEntity {
         @Column(name = "dt_atualizado", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
         private LocalDateTime dataAtualizado;
 
-
+        @Getter @Setter
+        @Column(name = "ativo", nullable = false)
+        private boolean ativo;
 }
