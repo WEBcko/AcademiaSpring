@@ -1,58 +1,48 @@
 package br.com.webcko.academia.controller;
 
-
-import br.com.webcko.academia.entity.Treino;
-import br.com.webcko.academia.repository.ClienteRepository;
 import br.com.webcko.academia.entity.Cliente;
-import br.com.webcko.academia.repository.TreinoRepository;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.webcko.academia.entity.GrupoMuscular;
+import br.com.webcko.academia.repository.GrupoMuscularRepository;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @Controller
-@RequestMapping(value = "api/cliente")
-public class ClienteController {
+@RequestMapping(value = "api/grupo")
+public class GrupoMuscularController {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    private GrupoMuscularRepository grupoMuscularRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findByIdParam (@PathVariable final Long id){
-        final Cliente cliente = this.clienteRepository.findById(id).orElse(null);
+    public ResponseEntity<?> findById(@PathVariable("id") final Long id){
 
-        return cliente == null
-                ? ResponseEntity.badRequest().body("Nenhum error encontrado.")
-                : ResponseEntity.ok(cliente);
+        GrupoMuscular grupo = this.grupoMuscularRepository.findById(id).orElse(null);
 
+        return grupo == null
+                ? ResponseEntity.badRequest().body("Nenhum registro encontrado")
+                : ResponseEntity.ok(grupo);
 
     }
 
     @GetMapping("/lista")
     public ResponseEntity<?> lista(){
-        return ResponseEntity.ok(this.clienteRepository.findAll());
+        return ResponseEntity.ok(this.grupoMuscularRepository.findAll());
     }
-
 
     @GetMapping("/ativos")
     public ResponseEntity<?> buscarAtivos (){
         try{
-            return ResponseEntity.ok(this.clienteRepository.findByAtivos());
+            return ResponseEntity.ok(this.grupoMuscularRepository.findByAtivos());
         }catch(RuntimeException e){
             return ResponseEntity.badRequest().body("Error " + e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrar (@RequestBody final Cliente cliente){
+    public ResponseEntity<?> cadastrar (@RequestBody final GrupoMuscular grupo){
         try{
-            this.clienteRepository.save(cliente);
+            this.grupoMuscularRepository.save(grupo);
             return ResponseEntity.ok("Registro salvo com sucesso");
         }catch(Exception error){
             return ResponseEntity.badRequest().body("Error" + error.getMessage());
@@ -60,15 +50,15 @@ public class ClienteController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Cliente cliente){
+    public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final GrupoMuscular grupo){
         try{
-            final Cliente clienteBanco = this.clienteRepository.findById(id).orElse(null);
+            final GrupoMuscular grupoBanco = this.grupoMuscularRepository.findById(id).orElse(null);
 
-            if(clienteBanco == null || !clienteBanco.getId().equals(cliente.getId())){
+            if(grupoBanco == null || !grupoBanco.getId().equals(grupo.getId())){
                 throw new RuntimeException("Nao foi possivel identificar o registro informado");
             }
 
-            this.clienteRepository.save(cliente);
+            this.grupoMuscularRepository.save(grupo);
             return ResponseEntity.ok("Registro atualizado com sucesso");
         }catch(DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error" + e.getCause().getCause().getMessage());
@@ -78,13 +68,13 @@ public class ClienteController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deletar (@RequestParam("id") final Long id){
+    public ResponseEntity<?> deletar (@RequestParam("id") final Long id) {
 
-        final Cliente clienteBanco  = this.clienteRepository.findById(id).orElse(null);
+        final GrupoMuscular grupoBanco = this.grupoMuscularRepository.findById(id).orElse(null);
 
-        if (clienteBanco != null) {
+        if (grupoBanco != null) {
             try {
-                this.clienteRepository.delete(clienteBanco);
+                this.grupoMuscularRepository.delete(grupoBanco);
                 return ResponseEntity.ok().body("Registro deletado com sucesso");
             } catch (DataIntegrityViolationException e) {
                 return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
@@ -92,8 +82,8 @@ public class ClienteController {
         } else {
             return ResponseEntity.badRequest().body("Nenhum registro encontrado");
         }
-
-
     }
+
+
 
 }

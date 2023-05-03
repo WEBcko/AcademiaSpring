@@ -22,5 +22,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 
     @Query("from Cliente where ativo = true")
-    public List<Cliente> findClienteByAtivo ();
+    public List<Cliente> findByAtivos ();
 }
