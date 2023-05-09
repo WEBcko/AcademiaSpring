@@ -16,12 +16,35 @@ public class TreinoExercicioService {
 
     @Transactional(rollbackFor = Exception.class)
     public void cadastrar(final TreinoExercicio treinoExercicio){
-        Assert.isTrue(treinoExercicio.getDificuldade().isBlank(), "Campo vazio");
-        Assert.isTrue( treinoExercicio.getPeso().isNaN() || treinoExercicio.getPeso() != null, "Error dado invalido ou vazio");
-        Assert.isTrue(treinoExercicio.getRepeticoes() != null, "Error campo vazio");
+        Assert.isTrue(treinoExercicio.getIdTreino() == null,"Error campo TREINO vazio");
+        Assert.isTrue(treinoExercicio.getIdExercicio() == null, "Error  campo EXERCICIO vazio");
+        Assert.isTrue(treinoExercicio.getDificuldade().isBlank(), "Campo DIFICULDADE vazio");
+        Assert.isTrue( treinoExercicio.getPeso().isNaN() || treinoExercicio.getPeso() != null, "Error campo PESO invalido ou vazio");
+        Assert.isTrue(treinoExercicio.getRepeticoes() != null, "Error campo REPETICOES vazio");
 
         this.treinoExercicioRepository.save(treinoExercicio);
     }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public void editar(final Long id, final TreinoExercicio treinoExercicio){
+        final TreinoExercicio treinoExercicioBanco = this.treinoExercicioRepository.findById(id).orElse(null);
+
+        Assert.isTrue(treinoExercicioBanco != null || treinoExercicioBanco.getId().equals(treinoExercicio.getId()), "Error registro nao encontrado");
+
+        Assert.isTrue(treinoExercicio.getId().equals(id), "id da URL e difirente do body");
+
+        Assert.isTrue(treinoExercicio.getIdTreino() == null,"Error campo TREINO vazio");
+        Assert.isTrue(treinoExercicio.getIdExercicio() == null, "Error  campo EXERCICIO vazio");
+        Assert.isTrue(treinoExercicio.getDificuldade().isBlank(), "Campo DIFICULDADE vazio");
+        Assert.isTrue( treinoExercicio.getPeso().isNaN() || treinoExercicio.getPeso() != null, "Error PESO invalido ou vazio");
+        Assert.isTrue(treinoExercicio.getRepeticoes() != null, "Error campo REPETICOES vazio");
+
+        this.treinoExercicioRepository.save(treinoExercicio);
+
+    }
+
+
 
 
 }

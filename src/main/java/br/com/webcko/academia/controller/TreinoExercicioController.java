@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/treinoexercicios")
-public class ControllerTreinoExercicio {
+public class TreinoExercicioController {
 
     @Autowired
     private TreinoExercicioRepository treinoExercicioRepository;
@@ -19,7 +19,7 @@ public class ControllerTreinoExercicio {
     @Autowired
     private TreinoExercicioService treinoExercicioService;
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findByid (@PathVariable("id") final Long id){
         try{
             return ResponseEntity.ok(this.treinoExercicioRepository.findById(id));
@@ -34,7 +34,7 @@ public class ControllerTreinoExercicio {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrar(final TreinoExercicio treinoExercicio){
+    public ResponseEntity<?> cadastrar(@RequestBody final TreinoExercicio treinoExercicio){
         try{
             this.treinoExercicioService.cadastrar(treinoExercicio);
             return ResponseEntity.ok("Cadastrado");
@@ -45,6 +45,14 @@ public class ControllerTreinoExercicio {
 
 
     @PutMapping
+    public ResponseEntity<?> editar(@RequestParam("id") final Long id, @RequestBody final TreinoExercicio treinoExercicio){
+        try{
+            this.treinoExercicioService.editar(id,treinoExercicio);
+            return ResponseEntity.ok("Alterado com sucesso");
+        }catch(RuntimeException e){
+            return ResponseEntity.badRequest().body("Error " + e.getMessage());
+        }
+    }
 
 
 
