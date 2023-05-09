@@ -13,12 +13,13 @@ import java.util.List;
 @Repository
 public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio, Long> {
 
-    @Query("from TreinoExercicio where idTreino = :id_treino")
-    public List<TreinoExercicio> findTreino(@Param("id_treino") final Treino id_treino);
+    @Query("from TreinoExercicio where id = :idTreino")
+    public List<TreinoExercicio> findTreino(@Param("idTreino") final Treino id_treino);
 
-    @Query("from TreinoExercicio where idExercicio = :id_exercicio")
-    public List<TreinoExercicio> findExercicio(@Param("id_exercicio") final Exercicio id_exercicio);
+    @Query("from TreinoExercicio where id = :idExercicio")
+    public List<TreinoExercicio> findExercicio(@Param("idExercicio") final Exercicio id_exercicio);
 
+    /**
     @Query("from TreinoExercicio where dificildade = :dificuldade")
     public List<TreinoExercicio> findDificuldade(@Param("dificuldade") final String dificuldade);
 
@@ -27,4 +28,5 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
 
     @Query("from TreinoExercicio where series = :series")
     public List<TreinoExercicio> findSeries(@Param("series") final Integer series);
+    */
 }
