@@ -55,6 +55,14 @@ public class TreinoExercicioController {
     }
 
 
+    @DeleteMapping
+    public ResponseEntity<?> deletar(@RequestParam("id") final Long id){
+        try{
+
+        }catch (){
+
+        }
+    }
 
 
 

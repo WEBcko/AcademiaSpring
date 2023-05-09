@@ -16,6 +16,7 @@ public class TreinoExercicioService {
 
     @Transactional(rollbackFor = Exception.class)
     public void cadastrar(final TreinoExercicio treinoExercicio){
+        //verificar
         Assert.isTrue(treinoExercicio.getIdTreino() == null,"Error campo TREINO vazio");
         Assert.isTrue(treinoExercicio.getIdExercicio() == null, "Error  campo EXERCICIO vazio");
         Assert.isTrue(treinoExercicio.getDificuldade().isBlank(), "Campo DIFICULDADE vazio");
@@ -45,6 +46,12 @@ public class TreinoExercicioService {
     }
 
 
+    @Transactional(rollbackFor = Exception.class)
+    public void deletar(final Long id){
+        final TreinoExercicio treinoExercicioBanco = this.treinoExercicioRepository.findById(id).orElse(null);
+
+        Assert.
+    }
 
 
 }
