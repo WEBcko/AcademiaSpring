@@ -12,5 +12,6 @@ import java.util.List;
 
 @Repository
 public interface TreinoRepository extends JpaRepository<Treino, Long> {
-
+    @Query("from Treino where codigo_ordem =: codigoOrdem")
+    public List<Treino> findCodigo(@Param("codigoOrdem") final String codigoOrdem);
 }
