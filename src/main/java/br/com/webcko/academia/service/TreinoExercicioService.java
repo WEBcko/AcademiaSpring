@@ -20,7 +20,7 @@ public class TreinoExercicioService {
         Assert.isTrue(treinoExercicio.getIdExercicio() == null, "Error  campo EXERCICIO vazio");
         Assert.isTrue(treinoExercicio.getDificuldade().isBlank(), "Campo DIFICULDADE vazio");
         Assert.isTrue( treinoExercicio.getPeso().isNaN() || treinoExercicio.getPeso() != null, "Error campo PESO invalido ou vazio");
-        Assert.isTrue(treinoExercicio.getRepeticoes() != null, "Error campo REPETICOES vazio");
+        Assert.isTrue(treinoExercicio.getSeries() != null, "Error campo REPETICOES vazio");
 
         this.treinoExercicioRepository.save(treinoExercicio);
     }
@@ -38,10 +38,20 @@ public class TreinoExercicioService {
         Assert.isTrue(treinoExercicio.getIdExercicio() == null, "Error  campo EXERCICIO vazio");
         Assert.isTrue(treinoExercicio.getDificuldade().isBlank(), "Campo DIFICULDADE vazio");
         Assert.isTrue( treinoExercicio.getPeso().isNaN() || treinoExercicio.getPeso() != null, "Error PESO invalido ou vazio");
-        Assert.isTrue(treinoExercicio.getRepeticoes() != null, "Error campo REPETICOES vazio");
+        Assert.isTrue(treinoExercicio.getSeries() != null, "Error campo REPETICOES vazio");
 
         this.treinoExercicioRepository.save(treinoExercicio);
 
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deletar(final Long id){
+        final TreinoExercicio treinoExercicioBanco = this.treinoExercicioRepository.findById(id).orElse(null);
+
+        Assert.isTrue(treinoExercicioBanco != null, "Error registro nao encontrado");
+
+        this.treinoExercicioRepository.delete(treinoExercicioBanco);
     }
 
 
