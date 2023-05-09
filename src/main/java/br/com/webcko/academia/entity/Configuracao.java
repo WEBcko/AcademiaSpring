@@ -23,5 +23,5 @@ public class Configuracao extends AbstractEntity{
 
     @Getter @Setter
     @Column(name = "ocupacao", nullable = false)
-    private int ocupacao;
+    private Integer ocupacao;
 }

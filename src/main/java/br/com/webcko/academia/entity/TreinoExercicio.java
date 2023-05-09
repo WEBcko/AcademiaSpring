@@ -32,7 +32,7 @@ public class TreinoExercicio extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "repeticoes")
-    private Integer repeticoes;
+    @Column(name = "series")
+    private Integer series;
 
 }

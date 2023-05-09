@@ -1,49 +1,41 @@
 package br.com.webcko.academia.controller;
 
-
+import br.com.webcko.academia.entity.Exercicio;
 import br.com.webcko.academia.entity.GrupoMuscular;
-import br.com.webcko.academia.entity.Treino;
-import br.com.webcko.academia.repository.TreinoRepository;
-import jakarta.validation.Valid;
-import org.apache.coyote.Response;
+import br.com.webcko.academia.repository.ExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @Controller
-@RequestMapping("/api/treino")
-public class TreinoController {
+@RequestMapping("/api/exercicio")
+public class ExercicioController {
 
     @Autowired
-    private TreinoRepository treinoRepository;
+    private ExercicioRepository exercicioRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") final Long id){
 
-        Treino treino = this.treinoRepository.findById(id).orElse(null);
+        Exercicio exercicio = this.exercicioRepository.findById(id).orElse(null);
 
-        return treino == null
+        return exercicio == null
                 ? ResponseEntity.badRequest().body("Nenhum registro encontrado")
-                : ResponseEntity.ok(treino);
+                : ResponseEntity.ok(exercicio);
 
     }
 
     @GetMapping("/lista")
-    public ResponseEntity<?> listaTreino(){
-        return ResponseEntity.ok(this.treinoRepository.findAll());
+    public ResponseEntity<?> listaExercicio(){
+        return ResponseEntity.ok(this.exercicioRepository.findAll());
     }
 
-
     @PostMapping
-    public ResponseEntity<?> cadastrar (@RequestBody final Treino treino){
+    public ResponseEntity<?> cadastrar (@RequestBody final Exercicio exercicio){
         try{
-            this.treinoRepository.save(treino);
+            this.exercicioRepository.save(exercicio);
             return ResponseEntity.ok("Registro salvo com sucesso");
         }catch(Exception erro){
             return ResponseEntity.badRequest().body("Error" + erro.getMessage());
@@ -51,31 +43,31 @@ public class TreinoController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Treino treino){
+    public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Exercicio exercicio){
         try{
-            final Treino treinoData = this.treinoRepository.findById(id).orElse(null);
+            final Exercicio exercicioData = this.exercicioRepository.findById(id).orElse(null);
 
-            if(treinoData == null || !treinoData.getId().equals(treino.getId())){
+            if(exercicioData == null || !exercicioData.getId().equals(exercicio.getId())){
                 throw new RuntimeException("Nao foi possivel identificar o registro informado");
             }
 
-            this.treinoRepository.save(treino);
+            this.exercicioRepository.save(exercicio);
             return ResponseEntity.ok("Registro atualizado com sucesso");
-        }catch(DataIntegrityViolationException e){
-            return ResponseEntity.internalServerError().body("Error" + e.getCause().getCause().getMessage());
-        }catch(RuntimeException e){
-            return ResponseEntity.badRequest().body("Error " + e.getMessage());
+        }catch(DataIntegrityViolationException erro){
+            return ResponseEntity.internalServerError().body("Error" + erro.getCause().getCause().getMessage());
+        }catch(RuntimeException erro){
+            return ResponseEntity.badRequest().body("Error " + erro.getMessage());
         }
     }
 
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final Long id) {
 
-        final Treino treinoData = this.treinoRepository.findById(id).orElse(null);
+        final Exercicio exercicioData = this.exercicioRepository.findById(id).orElse(null);
 
-        if (treinoData != null) {
+        if (exercicioData != null) {
             try {
-                this.treinoRepository.delete(treinoData);
+                this.exercicioRepository.delete(exercicioData);
                 return ResponseEntity.ok().body("Registro deletado com sucesso");
             } catch (DataIntegrityViolationException e) {
                 return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
@@ -84,7 +76,4 @@ public class TreinoController {
             return ResponseEntity.badRequest().body("Nenhum registro encontrado");
         }
     }
-
-
-
 }

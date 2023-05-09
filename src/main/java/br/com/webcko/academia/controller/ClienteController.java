@@ -35,7 +35,7 @@ public class ClienteController {
     }
 
     @GetMapping("/lista")
-    public ResponseEntity<?> listaCompletaTreinos(){
+    public ResponseEntity<?> lista(){
         return ResponseEntity.ok(this.clienteRepository.findAll());
     }
 
@@ -43,7 +43,7 @@ public class ClienteController {
     @GetMapping("/ativos")
     public ResponseEntity<?> buscarAtivos (){
         try{
-            return ResponseEntity.ok(this.clienteRepository.findClienteByAtivo());
+            return ResponseEntity.ok(this.clienteRepository.findByAtivos());
         }catch(RuntimeException e){
             return ResponseEntity.badRequest().body("Error " + e.getMessage());
         }
@@ -62,10 +62,10 @@ public class ClienteController {
     @PutMapping
     public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Cliente cliente){
         try{
-            final Cliente clientebBanco = this.clienteRepository.findById(id).orElse(null);
+            final Cliente clienteBanco = this.clienteRepository.findById(id).orElse(null);
 
-            if(clientebBanco == null || !clientebBanco.getId().equals(cliente.getId())){
-                throw new RuntimeException("Nao foi possivel identificar o regitro informado");
+            if(clienteBanco == null || !clienteBanco.getId().equals(cliente.getId())){
+                throw new RuntimeException("Nao foi possivel identificar o registro informado");
             }
 
             this.clienteRepository.save(cliente);
@@ -79,16 +79,21 @@ public class ClienteController {
 
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final Long id){
+
         final Cliente clienteBanco  = this.clienteRepository.findById(id).orElse(null);
 
-        if(clienteBanco == null){
-            this.clienteRepository.delete(clienteBanco);
-            return ResponseEntity.ok().body("Regitro deletado com sucesso");
-        }else{
-            clienteBanco.setAtivo(false);
-            this.clienteRepository.save(clienteBanco);
-            return ResponseEntity.ok().body("Ativo (cliente) alterado para false");
+        if (clienteBanco != null) {
+            try {
+                this.clienteRepository.delete(clienteBanco);
+                return ResponseEntity.ok().body("Registro deletado com sucesso");
+            } catch (DataIntegrityViolationException e) {
+                return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
+            }
+        } else {
+            return ResponseEntity.badRequest().body("Nenhum registro encontrado");
         }
+
+
     }
 
 }
