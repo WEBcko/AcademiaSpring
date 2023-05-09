@@ -18,7 +18,7 @@ public class PersonalController {
     private PersonalRepository personalRepository;
 
     @GetMapping
-    public ResponseEntity<?> findByIdParam (@PathVariable final Long id){
+    public ResponseEntity<?> findByIdParam (@PathVariable("id") final Long id){
         final Personal personal = this.personalRepository.findById(id).orElse(null);
 
         return personal == null
@@ -29,6 +29,24 @@ public class PersonalController {
     @GetMapping("/lista")
     public ResponseEntity<?> ListaCompletaTreinos(){
         return ResponseEntity.ok(this.personalRepository.findAll());
+    }
+
+    @GetMapping("/ativo")
+    public ResponseEntity<?> buscarAtivo(){
+        try{
+            return ResponseEntity.ok(this.personalRepository.findByAtivo());
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<?> buscaAdmin(){
+        try {
+            return ResponseEntity.ok(this.personalRepository.findByAdmin());
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
+        }
     }
 
    //admin
@@ -45,6 +63,7 @@ public class PersonalController {
 
     @PutMapping
     public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Personal personal){
+
         try{
             final Personal personalBanco = this.personalRepository.findById(id).orElse(null);
 
@@ -63,6 +82,7 @@ public class PersonalController {
 
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final long id){
+
         final Personal personalBanco = this.personalRepository.findById(id).orElse(null);
 
         if (personalBanco == null){
