@@ -14,4 +14,10 @@ public interface ExercicioRepository extends JpaRepository<Exercicio, Long> {
     @Query("from Exercicio where GrupoMuscular = :grupo")
     public List<Exercicio> findExerciciosByGrupo(@Param("grupo") GrupoMuscular grupo);
 
+    @Query("from Exercicio where id = :idExercicio")
+    public List<Exercicio> findExercicios(@Param("idExercicio") final Long id);
+
+    @Query("from Exercicio where id = :idTreino")
+    public List<Exercicio> findTreinos (@Param("idTreino")final Long id);
+
 }

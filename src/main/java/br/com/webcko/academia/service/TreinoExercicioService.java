@@ -45,6 +45,16 @@ public class TreinoExercicioService {
     }
 
 
+    @Transactional(rollbackFor = Exception.class)
+    public void deletar(final Long id){
+        final TreinoExercicio treinoExercicioBanco = this.treinoExercicioRepository.findById(id).orElse(null);
+
+        Assert.isTrue(treinoExercicioBanco != null, "Error registro nao encontrado");
+
+        this.treinoExercicioRepository.delete(treinoExercicioBanco);
+    }
+
+
 
 
 }
