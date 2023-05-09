@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class ConfiguracaoService {
@@ -30,7 +31,7 @@ public class ConfiguracaoService {
 
         Assert.isTrue(configuracaoBanco != null || configuracaoBanco.getId().equals(configuracao.getId()), "Error, registro nao encontrado");
 
-        Assert.isTrue(configuracaoBanco.getId().equals(id), "Error is da URL e diferente do body");
+        Assert.isTrue(configuracao.getId().equals(id), "Error id da URL e diferente do body");
 
         Assert.isTrue(configuracao.getHoraAbrir() == null, "Error, campo vazio");
         Assert.isTrue(configuracao.getHoraFechar() == null, "Error, campo vazio");
