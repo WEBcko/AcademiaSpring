@@ -7,12 +7,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "exercicios", schema = "public")
+@Table(name = "grupo_muscular", schema = "public")
 public class GrupoMuscular extends AbstractEntity {
 
     @Getter @Setter
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
-
 
 }
