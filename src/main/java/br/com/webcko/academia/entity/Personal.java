@@ -13,9 +13,9 @@ public class Personal extends Usuario {
     @Getter @Setter
     @Column(name = "admin", nullable = false)
     private boolean admin;
-
+  
     @PrePersist
-    private void prePersiste(){
-        this.admin = false;
-    }
+      private void prePersiste(){
+          this.admin = false;
+      }
 }
