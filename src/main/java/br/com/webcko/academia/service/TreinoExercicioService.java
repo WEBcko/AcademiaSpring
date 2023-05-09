@@ -1,17 +1,24 @@
 package br.com.webcko.academia.service;
 
+import br.com.webcko.academia.entity.Exercicio;
 import br.com.webcko.academia.entity.TreinoExercicio;
+import br.com.webcko.academia.repository.ExercicioRepository;
 import br.com.webcko.academia.repository.TreinoExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.List;
+
 @Service
 public class TreinoExercicioService {
 
     @Autowired
     private TreinoExercicioRepository treinoExercicioRepository;
+
+    @Autowired
+    private ExercicioRepository exercicioRepository;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -22,6 +29,12 @@ public class TreinoExercicioService {
         Assert.isTrue(treinoExercicio.getDificuldade().isBlank(), "Campo DIFICULDADE vazio");
         Assert.isTrue( treinoExercicio.getPeso().isNaN() || treinoExercicio.getPeso() != null, "Error campo PESO invalido ou vazio");
         Assert.isTrue(treinoExercicio.getRepeticoes() != null, "Error campo REPETICOES vazio");
+
+        List<Exercicio> exercicioLista = this.exercicioRepository.findExercicios(treinoExercicio.getId());
+        List<Exercicio> treinoLista = this.exercicioRepository.findTreinos(treinoExercicio.getId());
+
+        Assert.isTrue(exercicioLista.isEmpty(), "Error, Exercicio nao encontrado");
+        Assert.isTrue(treinoLista.isEmpty(), "Error, Treino nao encontrado");
 
         this.treinoExercicioRepository.save(treinoExercicio);
     }
@@ -50,7 +63,7 @@ public class TreinoExercicioService {
     public void deletar(final Long id){
         final TreinoExercicio treinoExercicioBanco = this.treinoExercicioRepository.findById(id).orElse(null);
 
-        Assert.
+        this.treinoExercicioRepository.delete(treinoExercicioBanco);
     }
 
 

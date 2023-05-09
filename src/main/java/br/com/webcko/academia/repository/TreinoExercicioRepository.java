@@ -12,10 +12,6 @@ import java.util.List;
 @Repository
 public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio, Long> {
 
-    @Query("from Exercicio where id = :idExercicio")
-    public List<Exercicio> findExercicios(@Param("idExercicio") final Exercicio idExercicio);
 
-    @Query("from Exercicio where id = :idTreino")
-    public List<Exercicio> findTreinos (@Param("idTreino")final Exercicio idTreino);
 
 }
