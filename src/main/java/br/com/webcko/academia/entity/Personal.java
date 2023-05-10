@@ -15,7 +15,8 @@ public class Personal extends Usuario {
     private Boolean admin;
 
     @PrePersist
-    private void prePersiste(){
-        this.admin = false;
-    }
+      private void prePersiste(){
+          this.admin = false;
+      }
+
 }

@@ -54,8 +54,15 @@ public class TreinoExercicioController {
         }
     }
 
-
-
+    @DeleteMapping
+    public ResponseEntity<?> deletar(@RequestParam("id") final Long id){
+        try{
+            this.treinoExercicioService.deletar(id);
+            return ResponseEntity.ok("Registro deletado");
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body("Error " + e.getMessage());
+        }
+    }
 
 
 }
