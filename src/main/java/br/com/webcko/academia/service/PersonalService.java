@@ -1,6 +1,8 @@
 package br.com.webcko.academia.service;
 
+import br.com.webcko.academia.entity.EntradaSaida;
 import br.com.webcko.academia.entity.Personal;
+import br.com.webcko.academia.repository.EntradaSaidaRepository;
 import br.com.webcko.academia.repository.PersonalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,17 @@ public class PersonalService {
     @Autowired
     private PersonalRepository personalRepository;
 
+    @Autowired
+    private EntradaSaidaRepository entradaSaidaRepository;
+
     @Transactional(rollbackFor = Exception.class)
     public void cadastrar(final Personal personal){
 
-        Assert.isTrue(personal.getAdmin() == null, "Erro, campo admin vazio");
-        Assert.isTrue(personal.getNome() == null, "Erro, campo nome vazio");
-        Assert.isTrue(personal.getTelefone() == null, "Erro, campo telefone vazio");
-        Assert.isTrue(personal.getCpf() == null, "Erro, campo cpf vazio");
-        Assert.isTrue(personal.getEmail() == null, "Erro, campo email vazio");
+        Assert.isTrue(personal.getAdmin() != null, "Erro, campo admin vazio");
+        Assert.isTrue(personal.getNome() != null, "Erro, campo nome vazio");
+        Assert.isTrue(personal.getTelefone() != null, "Erro, campo telefone vazio");
+        Assert.isTrue(personal.getCpf() != null, "Erro, campo cpf vazio");
+        Assert.isTrue(personal.getEmail() != null, "Erro, campo email vazio");
 
         //GET SENHA?
 
@@ -40,11 +45,11 @@ public class PersonalService {
 
         final Personal personalBanco = this.personalRepository.findById(id).orElse(null);
 
-        Assert.isTrue(personal.getAdmin() == null, "Erro, campo admin nao informado");
-        Assert.isTrue(personal.getNome() == null, "Erro, campo nome nao informado");
-        Assert.isTrue(personal.getTelefone() == null, "Erro, campo telefone nao informado");
-        Assert.isTrue(personal.getCpf() == null, "Erro, campo cpf nao informado");
-        Assert.isTrue(personal.getEmail() == null, "Erro, campo email nao informado");
+        Assert.isTrue(personal.getAdmin() != null, "Erro, campo admin nao informado");
+        Assert.isTrue(personal.getNome() != null, "Erro, campo nome nao informado");
+        Assert.isTrue(personal.getTelefone() != null, "Erro, campo telefone nao informado");
+        Assert.isTrue(personal.getCpf() != null, "Erro, campo cpf nao informado");
+        Assert.isTrue(personal.getEmail() != null, "Erro, campo email nao informado");
 
         Assert.isTrue(personalBanco == null || !personalBanco.getId().equals(personal.getId()), "nao foi possivel identificar o personal");
 
@@ -58,13 +63,13 @@ public class PersonalService {
 
         Assert.isTrue(personalBanco != null, "Registro nao encontrado");
 
-//        final List<Personal> personals = this.personalRepository.findPersonalByPersonal(personalBanco);
-//
-//        if (personals.isEmpty()){
-//            this.personalRepository.delete(personalBanco);
-//        }else {
-//            personalBanco.setAtivo(false);
-//            this.personalRepository.save(personalBanco);
-//        }
+        final List<EntradaSaida> entradaSaidas = this.entradaSaidaRepository.findEntradaSaidaByIdPersonal(personalBanco);
+
+        if (entradaSaidas.isEmpty()){
+            this.personalRepository.delete(personalBanco);
+        }else {
+            personalBanco.setAtivo(false);
+            this.personalRepository.save(personalBanco);
+        }
     }
 }
