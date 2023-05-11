@@ -40,4 +40,14 @@ public class EntradaSaidaService {
 
         this.entradaSaidaRepository.save(entradaSaida);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deletar(final Long id){
+        final EntradaSaida entradaSaidaBanco = this.entradaSaidaRepository.findById(id).orElse(null);
+
+        Assert.isTrue(entradaSaidaBanco != null, "Registro nao encontrado.");
+
+        entradaSaidaBanco.setAtivo(false);
+        this.entradaSaidaRepository.save(entradaSaidaBanco);
+    }
 }
