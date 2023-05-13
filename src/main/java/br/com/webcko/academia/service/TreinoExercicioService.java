@@ -1,11 +1,14 @@
 package br.com.webcko.academia.service;
 
+import br.com.webcko.academia.entity.Treino;
 import br.com.webcko.academia.entity.TreinoExercicio;
 import br.com.webcko.academia.repository.TreinoExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 @Service
 public class TreinoExercicioService {
@@ -51,7 +54,15 @@ public class TreinoExercicioService {
 
         Assert.isTrue(treinoExercicioBanco != null, "Error registro nao encontrado");
 
-        this.treinoExercicioRepository.delete(treinoExercicioBanco);
+        List<TreinoExercicio> treinoExercicioList = this.treinoExercicioRepository.findtreinoExercicio(id);
+        if(treinoExercicioList.isEmpty()){
+            this.treinoExercicioRepository.delete(treinoExercicioBanco);
+        }else{
+            treinoExercicioBanco.setAtivo(false);
+            this.treinoExercicioRepository.save(treinoExercicioBanco);
+        }
+
+//        this.treinoExercicioRepository.delete(treinoExercicioBanco);
     }
 
 
