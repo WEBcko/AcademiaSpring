@@ -12,10 +12,11 @@ public class Personal extends Usuario {
 
     @Getter @Setter
     @Column(name = "admin", nullable = false)
-    private boolean admin;
-  
+    private Boolean admin;
+
     @PrePersist
       private void prePersiste(){
           this.admin = false;
       }
+
 }
