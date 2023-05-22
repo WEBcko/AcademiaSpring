@@ -5,6 +5,7 @@ import br.com.webcko.academia.entity.Treino;
 import br.com.webcko.academia.repository.ClienteRepository;
 import br.com.webcko.academia.entity.Cliente;
 import br.com.webcko.academia.repository.TreinoRepository;
+import br.com.webcko.academia.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +23,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ClienteService clienteService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdParam (@PathVariable final Long id){
@@ -68,7 +72,8 @@ public class ClienteController {
                 throw new RuntimeException("Nao foi possivel identificar o registro informado");
             }
 
-            this.clienteRepository.save(cliente);
+            this.clienteService.editar(id, cliente);
+
             return ResponseEntity.ok("Registro atualizado com sucesso");
         }catch(DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error" + e.getCause().getCause().getMessage());
