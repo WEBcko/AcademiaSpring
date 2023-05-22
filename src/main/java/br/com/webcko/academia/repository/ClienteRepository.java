@@ -1,6 +1,7 @@
 package br.com.webcko.academia.repository;
 
 import br.com.webcko.academia.entity.Cliente;
+import br.com.webcko.academia.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,10 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @Query("from Cliente where ativo = true")
     public List<Cliente> findByAtivos ();
+
+    @Query("from Cliente where cpf = :cpf")
+    public List<Cliente> findCpf (@Param("cpf") final String cpf);
+
+    @Query("from Cliente where cpf = :cpf and id not in (:id)")
+    public List<Cliente> findCpfId (@Param("cpf") final String cpf,@Param("id") final Long id);
 }
