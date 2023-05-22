@@ -35,11 +35,13 @@ public class ClienteService {
         Assert.isTrue(cliente.getNumeroCasa() <= 0, "Erro, campo NumeroCasa vazio");
         Assert.isTrue(cliente.getDataNascimento() != null, "Erro, campo DataNascimento vazio");
 
-        String cpf = "^\\d{3}\\.\\d{3}\\-\\d{2}$";
+        String cpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
         Assert.isTrue(cliente.getCpf().matches(cpf), "Erro na mascara do cpf");
+        Assert.isTrue(this.clienteRepository.findCpf(cliente.getCpf()).isEmpty(), "CPF já existente.");
 
-        String telefone = "^\\d{11}";
+        String telefone = "\\+\\d{3}\\(\\d{3}\\)\\d{5}-\\d{4}";
         Assert.isTrue(cliente.getTelefone().matches(telefone), "Erro no tamanho do telefone");
+        Assert.isTrue(this.clienteRepository.findTelefone(cliente.getTelefone()).isEmpty(), "Telefone já existente.");
 
         String cep = "^\\d{5}\\-\\d{3}";
         Assert.isTrue(cliente.getCep().matches(cep), "Erro na mascara do cep");
@@ -61,19 +63,20 @@ public class ClienteService {
         Assert.isTrue(cliente.getPeso() != null, "Erro, campo Peso vazio");
         Assert.isTrue(cliente.getAltura() != null, "Erro, campo Altura vazio");
         Assert.isTrue(cliente.getCep() != null, "Erro, campo Cep vazio");
-        Assert.isTrue(cliente.getNumeroCasa() <= 0, "Erro, campo NumeroCasa vazio");
+        Assert.isTrue(cliente.getNumeroCasa() >= 0, "Erro, campo NumeroCasa vazio");
         Assert.isTrue(cliente.getDataNascimento() != null, "Erro, campo DataNascimento vazio");
 
-        String cpf = "^\\d{3}\\.\\d{3}\\-\\d{2}$";
+        Assert.isTrue(clienteBanco != null || !clienteBanco.getId().equals(cliente.getId()), "Nao foi possivel identificar o registro.");
+        String cpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
         Assert.isTrue(cliente.getCpf().matches(cpf), "Erro na mascara do cpf");
+        Assert.isTrue(this.clienteRepository.findCpfId(cliente.getCpf(), cliente.getId())!= null, "CPF ja existente.");
 
-        String telefone = "^\\d{11}";
+        String telefone = "\\+\\d{3}\\(\\d{3}\\)\\d{5}-\\d{4}";
         Assert.isTrue(cliente.getTelefone().matches(telefone), "Erro no tamanho do telefone");
+
 
         String cep = "^\\d{5}\\-\\d{3}";
         Assert.isTrue(cliente.getCep().matches(cep), "Erro na mascara do cep");
-
-        Assert.isTrue(clienteBanco == null || !clienteBanco.getId().equals(cliente.getId()), "nao foi possivel identificar o cliente");
 
 
         this.clienteRepository.save(cliente);
