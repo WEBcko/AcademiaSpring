@@ -56,6 +56,5 @@ public class EntradaSaidaController {
         } catch (DataIntegrityViolationException erro){
             return ResponseEntity.internalServerError().body("Error" + erro.getCause().getCause().getMessage());
         }
-
     }
 }
