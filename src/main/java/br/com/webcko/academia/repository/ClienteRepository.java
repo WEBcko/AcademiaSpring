@@ -30,4 +30,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @Query("from Cliente where cpf = :cpf and id not in (:id)")
     public List<Cliente> findCpfId (@Param("cpf") final String cpf,@Param("id") final Long id);
+
+    @Query("from Cliente where telefone = :telefone")
+    public List<Cliente> findTelefone (@Param("telefone") final String telefone);
 }

@@ -41,6 +41,7 @@ public class ClienteService {
 
         String telefone = "\\+\\d{3}\\(\\d{3}\\)\\d{5}-\\d{4}";
         Assert.isTrue(cliente.getTelefone().matches(telefone), "Erro no tamanho do telefone");
+        Assert.isTrue(this.clienteRepository.findTelefone(cliente.getTelefone()).isEmpty(), "Telefone já existente.");
 
         String cep = "^\\d{5}\\-\\d{3}";
         Assert.isTrue(cliente.getCep().matches(cep), "Erro na mascara do cep");
@@ -72,6 +73,7 @@ public class ClienteService {
 
         String telefone = "\\+\\d{3}\\(\\d{3}\\)\\d{5}-\\d{4}";
         Assert.isTrue(cliente.getTelefone().matches(telefone), "Erro no tamanho do telefone");
+
 
         String cep = "^\\d{5}\\-\\d{3}";
         Assert.isTrue(cliente.getCep().matches(cep), "Erro na mascara do cep");
