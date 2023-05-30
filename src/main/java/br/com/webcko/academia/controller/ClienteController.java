@@ -56,7 +56,7 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<?> cadastrar (@RequestBody final Cliente cliente){
         try{
-            this.clienteRepository.save(cliente);
+            this.clienteService.cadastrar(cliente);
             return ResponseEntity.ok("Registro salvo com sucesso");
         }catch(Exception error){
             return ResponseEntity.badRequest().body("Error" + error.getMessage());
@@ -66,11 +66,6 @@ public class ClienteController {
     @PutMapping
     public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Cliente cliente){
         try{
-            final Cliente clienteBanco = this.clienteRepository.findById(id).orElse(null);
-
-            if(clienteBanco == null || !clienteBanco.getId().equals(cliente.getId())){
-                throw new RuntimeException("Nao foi possivel identificar o registro informado");
-            }
 
             this.clienteService.editar(id, cliente);
 
@@ -85,20 +80,11 @@ public class ClienteController {
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final Long id){
 
-        final Cliente clienteBanco  = this.clienteRepository.findById(id).orElse(null);
-
-        if (clienteBanco != null) {
             try {
-                this.clienteRepository.delete(clienteBanco);
+                this.clienteService.deletar(id);
                 return ResponseEntity.ok().body("Registro deletado com sucesso");
             } catch (DataIntegrityViolationException e) {
                 return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
             }
-        } else {
-            return ResponseEntity.badRequest().body("Nenhum registro encontrado");
-        }
-
-
     }
-
 }
