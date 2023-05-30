@@ -1,5 +1,6 @@
 package br.com.webcko.academia.controller;
 
+import br.com.webcko.academia.entity.Cliente;
 import br.com.webcko.academia.entity.Exercicio;
 import br.com.webcko.academia.entity.Personal;
 import br.com.webcko.academia.repository.PersonalRepository;
@@ -20,6 +21,7 @@ public class PersonalController {
 
     @Autowired
     private PersonalService personalService;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdParam (@PathVariable("id") final Long id){
@@ -81,11 +83,13 @@ public class PersonalController {
 
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final long id){
-      try{
-          this.personalService.deletar(id);
-          return ResponseEntity.ok().body("Registro deletado com sucesso");
-      }catch(RuntimeException e){
-          return ResponseEntity.badRequest().body("Error " + e.getMessage());
-      }
+        try {
+            this.personalService.deletar(id);
+            return ResponseEntity.ok().body("Registro deletado com sucesso");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
+        }
     }
 }
+
+

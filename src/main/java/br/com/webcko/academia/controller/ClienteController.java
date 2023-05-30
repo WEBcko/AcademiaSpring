@@ -54,7 +54,7 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<?> cadastrar (@RequestBody final Cliente cliente){
         try{
-            this.clienteRepository.save(cliente);
+            this.clienteService.cadastrar(cliente);
             return ResponseEntity.ok("Registro salvo com sucesso");
         }catch(Exception error){
             return ResponseEntity.badRequest().body("Error" + error.getMessage());
@@ -75,12 +75,11 @@ public class ClienteController {
 
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final Long id){
-        try{
-            this.clienteService.deletar(id);
-        }catch (RuntimeException e){
-            return ResponseEntity.badRequest().body("Error " + e.getMessage());
-        }
-        return ResponseEntity.ok().body("Registro deletado com sucesso");
+            try {
+                this.clienteService.deletar(id);
+                return ResponseEntity.ok().body("Registro deletado com sucesso");
+            } catch (DataIntegrityViolationException e) {
+                return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
+            }
     }
-
 }
