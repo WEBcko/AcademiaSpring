@@ -29,5 +29,15 @@ public abstract class Usuario extends AbstractEntity {
         @Column(name = "senha", nullable = false, length = 100)
         private String senha;
 
+        @PrePersist
+        private void prePersisteUser(){
+                this.dataCadastrado = LocalDateTime.now();
+                this.ativo=true;
+        }
+
+        @PreUpdate
+        private void preUpdateUser(){
+                this.dataAtualizado = LocalDateTime.now();
+        }
 
 }
