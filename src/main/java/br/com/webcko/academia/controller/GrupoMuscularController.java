@@ -68,7 +68,6 @@ public class GrupoMuscularController {
 
     @DeleteMapping
     public ResponseEntity<?> deletar(@RequestParam("id") final Long id) {
-
         try {
             this.grupoMuscularService.deletar(id);
             return ResponseEntity.ok().body("Registro deletado com sucesso");

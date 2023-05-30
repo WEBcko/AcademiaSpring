@@ -21,6 +21,10 @@ public class ClienteService {
     @Autowired
     private EntradaSaidaRepository entradaSaidaRepository;
 
+    private final String telefone = "^\\+d{2}\\(d{3}\\)d{5}\\-d{4}$";
+
+    private final String  cpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
+
     @Transactional(rollbackFor = Exception.class)
     public void cadastrar(final Cliente cliente){
 
@@ -35,10 +39,9 @@ public class ClienteService {
         Assert.isTrue(cliente.getNumeroCasa() <= 0, "Erro, campo NumeroCasa vazio");
         Assert.isTrue(cliente.getDataNascimento() != null, "Erro, campo DataNascimento vazio");
 
-        String cpf = "^\\d{3}\\.\\d{3}\\-\\d{2}$";
+
         Assert.isTrue(cliente.getCpf().matches(cpf), "Erro na mascara do cpf");
 
-        String telefone = "^\\d{11}";
         Assert.isTrue(cliente.getTelefone().matches(telefone), "Erro no tamanho do telefone");
 
         String cep = "^\\d{5}\\-\\d{3}";
@@ -52,6 +55,7 @@ public class ClienteService {
 
         final Cliente clienteBanco = this.clienteRepository.findById(id).orElse(null);
 
+        Assert.isTrue(clienteBanco == null || !clienteBanco.getId().equals(cliente.getId()), "nao foi possivel identificar o cliente");
 
         Assert.isTrue(cliente.getNome() != null, "Erro, campo nome vazio");
         Assert.isTrue(cliente.getTelefone() != null, "Erro, campo telefone vazio");
@@ -73,7 +77,7 @@ public class ClienteService {
         String cep = "^\\d{5}\\-\\d{3}";
         Assert.isTrue(cliente.getCep().matches(cep), "Erro na mascara do cep");
 
-        Assert.isTrue(clienteBanco == null || !clienteBanco.getId().equals(cliente.getId()), "nao foi possivel identificar o cliente");
+
 
 
         this.clienteRepository.save(cliente);

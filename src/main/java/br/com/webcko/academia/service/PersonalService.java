@@ -23,7 +23,7 @@ public class PersonalService {
     @Transactional(rollbackFor = Exception.class)
     public void cadastrar(final Personal personal){
 
-        Assert.isTrue(personal.getAdmin() != null, "Erro, campo admin vazio");
+       // Assert.isTrue(personal.getAdmin() != null, "Erro, campo admin vazio");
         Assert.isTrue(personal.getNome() != null, "Erro, campo nome vazio");
         Assert.isTrue(personal.getTelefone() != null, "Erro, campo telefone vazio");
         Assert.isTrue(personal.getCpf() != null, "Erro, campo cpf vazio");
@@ -31,10 +31,10 @@ public class PersonalService {
 
         //GET SENHA?
 
-        String cpf = "^\\d{3}\\.\\d{3}\\-\\d{2}$";
+        String cpf = "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$";
         Assert.isTrue(personal.getCpf().matches(cpf), "Erro na mascara do cpf");
 
-        String telefone = "^\\d{11}";
+        String telefone = "^\\d{11}$";
         Assert.isTrue(personal.getTelefone().matches(telefone), "Erro no tamanho do telefone");
 
         this.personalRepository.save(personal);
@@ -45,13 +45,15 @@ public class PersonalService {
 
         final Personal personalBanco = this.personalRepository.findById(id).orElse(null);
 
+        Assert.isTrue(personalBanco == null || !personalBanco.getId().equals(personal.getId()), "nao foi possivel identificar o personal");
+
         Assert.isTrue(personal.getAdmin() != null, "Erro, campo admin nao informado");
         Assert.isTrue(personal.getNome() != null, "Erro, campo nome nao informado");
         Assert.isTrue(personal.getTelefone() != null, "Erro, campo telefone nao informado");
         Assert.isTrue(personal.getCpf() != null, "Erro, campo cpf nao informado");
         Assert.isTrue(personal.getEmail() != null, "Erro, campo email nao informado");
 
-        Assert.isTrue(personalBanco == null || !personalBanco.getId().equals(personal.getId()), "nao foi possivel identificar o personal");
+
 
         this.personalRepository.save(personal);
     }

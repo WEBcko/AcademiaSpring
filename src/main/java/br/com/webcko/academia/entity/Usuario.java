@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @MappedSuperclass
 public abstract class Usuario extends AbstractEntity {
 
@@ -12,7 +14,7 @@ public abstract class Usuario extends AbstractEntity {
         private String nome;
 
         @Getter @Setter
-        @Column(name = "telefone", nullable = false, length = 30)
+        @Column(name = "telefone", nullable = false, unique = true, length = 30)
         private String telefone;
 
         @Getter @Setter
@@ -26,5 +28,6 @@ public abstract class Usuario extends AbstractEntity {
         @Getter @Setter
         @Column(name = "senha", nullable = false, length = 100)
         private String senha;
+
 
 }

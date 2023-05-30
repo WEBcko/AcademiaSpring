@@ -5,6 +5,7 @@ import br.com.webcko.academia.entity.Treino;
 import br.com.webcko.academia.repository.ClienteRepository;
 import br.com.webcko.academia.entity.Cliente;
 import br.com.webcko.academia.repository.TreinoRepository;
+import br.com.webcko.academia.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,6 +24,9 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdParam (@PathVariable final Long id){
         final Cliente cliente = this.clienteRepository.findById(id).orElse(null);
@@ -30,8 +34,6 @@ public class ClienteController {
         return cliente == null
                 ? ResponseEntity.badRequest().body("Nenhum error encontrado.")
                 : ResponseEntity.ok(cliente);
-
-
     }
 
     @GetMapping("/lista")
@@ -62,13 +64,7 @@ public class ClienteController {
     @PutMapping
     public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Cliente cliente){
         try{
-            final Cliente clienteBanco = this.clienteRepository.findById(id).orElse(null);
-
-            if(clienteBanco == null || !clienteBanco.getId().equals(cliente.getId())){
-                throw new RuntimeException("Nao foi possivel identificar o registro informado");
-            }
-
-            this.clienteRepository.save(cliente);
+            this.clienteService.editar(id,cliente);
             return ResponseEntity.ok("Registro atualizado com sucesso");
         }catch(DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error" + e.getCause().getCause().getMessage());
@@ -79,21 +75,12 @@ public class ClienteController {
 
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final Long id){
-
-        final Cliente clienteBanco  = this.clienteRepository.findById(id).orElse(null);
-
-        if (clienteBanco != null) {
-            try {
-                this.clienteRepository.delete(clienteBanco);
-                return ResponseEntity.ok().body("Registro deletado com sucesso");
-            } catch (DataIntegrityViolationException e) {
-                return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
-            }
-        } else {
-            return ResponseEntity.badRequest().body("Nenhum registro encontrado");
+        try{
+            this.clienteService.deletar(id);
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body("Error " + e.getMessage());
         }
-
-
+        return ResponseEntity.ok().body("Registro deletado com sucesso");
     }
 
 }

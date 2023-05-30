@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -17,20 +18,19 @@ public abstract class AbstractEntity {
 
         @Getter @Setter
         @Column(name = "dt_cadastrado", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
-        private LocalDateTime dataCadastrado;
+        protected LocalDateTime dataCadastrado;
 
         @Getter @Setter
-        @Column(name = "dt_atualizado", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
-        private LocalDateTime dataAtualizado;
+        @Column(name = "dt_atualizado", nullable = true, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+        protected LocalDateTime dataAtualizado;
 
         @Getter @Setter
         @Column(name = "ativo", nullable = false)
-        private boolean ativo;
+        protected boolean ativo;
 
         @PrePersist
         private void prePersiste(){
                 this.dataCadastrado = LocalDateTime.now();
-                this.dataAtualizado = LocalDateTime.now();
                 this.ativo=true;
         }
 
@@ -38,4 +38,5 @@ public abstract class AbstractEntity {
         private void preUpdate(){
                 this.dataAtualizado = LocalDateTime.now();
         }
+
 }
