@@ -4,6 +4,7 @@ package br.com.webcko.academia.controller;
 import br.com.webcko.academia.entity.GrupoMuscular;
 import br.com.webcko.academia.entity.Treino;
 import br.com.webcko.academia.repository.TreinoRepository;
+import br.com.webcko.academia.service.TreinoService;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class TreinoController {
 
     @Autowired
     private TreinoRepository treinoRepository;
+
+    @Autowired
+    private TreinoService treinoService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") final Long id){
@@ -43,7 +47,7 @@ public class TreinoController {
     @PostMapping
     public ResponseEntity<?> cadastrar (@RequestBody final Treino treino){
         try{
-            this.treinoRepository.save(treino);
+            this.treinoService.cadastrar(treino);
             return ResponseEntity.ok("Registro salvo com sucesso");
         }catch(Exception erro){
             return ResponseEntity.badRequest().body("Error" + erro.getMessage());
@@ -53,13 +57,8 @@ public class TreinoController {
     @PutMapping
     public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Treino treino){
         try{
-            final Treino treinoData = this.treinoRepository.findById(id).orElse(null);
 
-            if(treinoData == null || !treinoData.getId().equals(treino.getId())){
-                throw new RuntimeException("Nao foi possivel identificar o registro informado");
-            }
-
-            this.treinoRepository.save(treino);
+            this.treinoService.editar(id,treino);
             return ResponseEntity.ok("Registro atualizado com sucesso");
         }catch(DataIntegrityViolationException e){
             return ResponseEntity.internalServerError().body("Error" + e.getCause().getCause().getMessage());
@@ -71,18 +70,13 @@ public class TreinoController {
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final Long id) {
 
-        final Treino treinoData = this.treinoRepository.findById(id).orElse(null);
-
-        if (treinoData != null) {
             try {
-                this.treinoRepository.delete(treinoData);
+                this.treinoService.deletar(id);
                 return ResponseEntity.ok().body("Registro deletado com sucesso");
             } catch (DataIntegrityViolationException e) {
                 return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
             }
-        } else {
-            return ResponseEntity.badRequest().body("Nenhum registro encontrado");
-        }
+
     }
 
 
