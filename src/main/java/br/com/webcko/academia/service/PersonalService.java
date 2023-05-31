@@ -45,7 +45,7 @@ public class PersonalService {
 
         final Personal personalBanco = this.personalRepository.findById(id).orElse(null);
 
-        Assert.isTrue(personalBanco == null || !personalBanco.getId().equals(personal.getId()), "nao foi possivel identificar o personal");
+        Assert.isTrue(personalBanco != null || !personalBanco.getId().equals(personal.getId()), "nao foi possivel identificar o personal");
 
         Assert.isTrue(personal.getAdmin() != null, "Erro, campo admin nao informado");
         Assert.isTrue(personal.getNome() != null, "Erro, campo nome nao informado");
