@@ -1,0 +1,40 @@
+package br.com.webcko.academia.service;
+
+import br.com.webcko.academia.entity.Usuario;
+import br.com.webcko.academia.repository.UsuarioRepository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UsuarioService {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Transactional(rollbackFor = Exception.class)
+    public Usuario buscarPorId(final Long id){
+        return usuarioRepository.findById(id).orElse(null);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void cadastro(final Usuario usuario){
+        this.usuarioRepository.save(usuario);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void editar(final Usuario usuario){
+        final Usuario usuarioBanco = this.usuarioRepository.findById(usuario.getId()).orElse(null);
+
+        this.usuarioRepository.save(usuario);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void deletar(final Usuario usuario){
+        final Usuario usuarioBanco = this.usuarioRepository.findById(usuario.getId()).orElse(null);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Usuario alterarTipoUsuario(final Long id, final Usuario.UsuarioRole novoTipo) {
+        Usuario usuario = buscarPorId(id);
+        usuario.setRole(novoTipo);
+        return usuarioRepository.save(usuario);
+    }
+}

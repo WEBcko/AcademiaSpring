@@ -2,6 +2,7 @@ package br.com.webcko.academia.controller;
 
 import br.com.webcko.academia.entity.EntradaSaida;
 import br.com.webcko.academia.repository.EntradaSaidaRepository;
+import br.com.webcko.academia.service.EntradaSaidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ public class EntradaSaidaController {
     @Autowired
     private EntradaSaidaRepository entradaSaidaRepository;
 
+    @Autowired
+    private EntradaSaidaService entradaSaidaService;
+
 
     @GetMapping
     public ResponseEntity<?> findEntradaSaida(){
@@ -24,7 +28,7 @@ public class EntradaSaidaController {
     @PostMapping
     public ResponseEntity<?> cadastrar (@RequestBody final EntradaSaida entradaSaida){
         try{
-            this.entradaSaidaRepository.save(entradaSaida);
+            this.entradaSaidaService.cadastrar(entradaSaida);
             return ResponseEntity.ok("Registro salvo com sucesso.");
         }catch (Exception erro){
             return ResponseEntity.badRequest().body("Error" + erro.getMessage());
@@ -38,8 +42,7 @@ public class EntradaSaidaController {
             if(entradaSaidaData == null || !entradaSaidaData.getId().equals(entradaSaida.getId())){
                 throw new RuntimeException("Nao foi possivel identificar o registro informado");
             }
-
-            this.entradaSaidaRepository.save(entradaSaida);
+            this.entradaSaidaService.editar(entradaSaida, id);
             return ResponseEntity.ok("Registro atualizado com sucesso.");
         }catch (DataIntegrityViolationException erro){
             return ResponseEntity.internalServerError().body("Error" + erro.getCause().getCause().getMessage());

@@ -33,10 +33,10 @@ public class EntradaSaidaService {
 
         Assert.isTrue(entradaSaida.getId().equals(id), "Erro, id da URL diferente do body");
 
-        Assert.isTrue(entradaSaida.getCliente() == null, "Erro, campo vazio");
-        Assert.isTrue(entradaSaida.getPersonal() == null, "Erro, campo vazio");
-        Assert.isTrue(entradaSaida.getHoraEntrada() == null, "Erro, campo vazio.");
-        Assert.isTrue(entradaSaida.getHoraSaida() == null, "Erro, campo vazio");
+        Assert.isTrue(entradaSaida.getCliente() == null, "Erro, campo cliente vazio");
+        Assert.isTrue(entradaSaida.getPersonal() == null, "Erro, campo personal vazio");
+        Assert.isTrue(entradaSaida.getHoraEntrada() == null, "Erro, campo entrada vazio.");
+        Assert.isTrue(entradaSaida.getHoraSaida() == null, "Erro, campo saida vazio");
 
         this.entradaSaidaRepository.save(entradaSaida);
     }
