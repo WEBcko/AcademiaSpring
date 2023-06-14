@@ -13,7 +13,12 @@ public class EntradaSaida extends AbstractEntity {
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
-    private User id;
+    private Usuario cliente;
+
+    @Getter @Setter
+    @ManyToOne
+    @JoinColumn(name = "id_personal", nullable = false)
+    private Usuario personal;
 
     @Getter @Setter
     @Column(name = "hora_entrada", nullable = false)
