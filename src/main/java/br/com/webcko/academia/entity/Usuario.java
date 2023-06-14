@@ -63,7 +63,4 @@ public class Usuario {
     @Column(name = "role", nullable = false)
     private UsuarioRole role;
 
-    public enum UsuarioRole {
-        PERSONAL, CLIENTE, ADMIN
-    }
 }

@@ -1,6 +1,7 @@
 package br.com.webcko.academia.service;
 
 import br.com.webcko.academia.entity.Usuario;
+import br.com.webcko.academia.entity.UsuarioRole;
 import br.com.webcko.academia.repository.UsuarioRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,14 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
     @Transactional(rollbackFor = Exception.class)
-    public void cadastro(final Usuario usuario){
-        this.usuarioRepository.save(usuario);
+    public Usuario criarUsuario(String nome, String senha, UsuarioRole role){
+        Usuario usuario = new Usuario();
+        usuario.setNome(nome);
+        usuario.setSenha(senha);
+        usuario.setRole(role);
+        return  usuarioRepository.save(usuario);
     }
+
     @Transactional(rollbackFor = Exception.class)
     public void editar(final Usuario usuario){
         final Usuario usuarioBanco = this.usuarioRepository.findById(usuario.getId()).orElse(null);
@@ -32,9 +38,12 @@ public class UsuarioService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Usuario alterarTipoUsuario(final Long id, final Usuario.UsuarioRole novoTipo) {
-        Usuario usuario = buscarPorId(id);
-        usuario.setRole(novoTipo);
-        return usuarioRepository.save(usuario);
+    public Usuario tipoUsuarioRole(Long id, UsuarioRole novoRole){
+        Usuario usuario = usuarioRepository.findById(id).orElse(null);
+        if(usuario != null){
+            usuario.setRole(novoRole);
+            return  usuarioRepository.save(usuario);
+        }
+        return null;
     }
 }

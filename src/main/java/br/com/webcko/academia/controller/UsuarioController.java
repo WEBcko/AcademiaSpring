@@ -1,11 +1,13 @@
 package br.com.webcko.academia.controller;
 
-import br.com.webcko.academia.entity.Treino;
+import br.com.webcko.academia.DTOs.UsuarioRequest;
 import br.com.webcko.academia.entity.Usuario;
+import br.com.webcko.academia.entity.UsuarioRole;
 import br.com.webcko.academia.repository.UsuarioRepository;
 import br.com.webcko.academia.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,17 +37,9 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastro (@RequestBody final Usuario usuario){
-        try{
-            this.usuarioService.cadastro(usuario);
-            return ResponseEntity.ok("Regitro realizado com sucesso.");
-        } catch (DataIntegrityViolationException erro){ //erro de violação de integridade de dados
-            return ResponseEntity.internalServerError().body("Erro"+erro.getMessage());
-        } catch (RuntimeException erro){ //erro de varais exceções de tempo de execução
-            return ResponseEntity.internalServerError().body("Erro"+erro.getMessage());
-        } catch (Exception erro) { // Se ocorrer outra exceção nao capturada pelos blocos anteriores
-            return ResponseEntity.badRequest().body("Erro" + erro.getMessage());
-        }
+    public ResponseEntity<?> cadastro (@RequestBody final UsuarioRequest request){
+        Usuario usuario = usuarioService.criarUsuario(request.getNome(), request.getSenha(), request.getRole());
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @PutMapping
@@ -64,6 +58,16 @@ public class UsuarioController {
         }catch(RuntimeException e){
             return ResponseEntity.badRequest().body("Error " + e.getMessage());
         }
+    }
+
+    @PutMapping("/{usuarioId}/role")
+    public Usuario updateUsuarioRole(@PathVariable Long id, UsuarioRole novoRole){
+        Usuario usuario = usuarioRepository.findById(id).orElse(null);
+        if(usuario != null){
+            usuario.setRole(novoRole);
+            return  usuarioRepository.save(usuario);
+        }
+        return null;
     }
 
 }
