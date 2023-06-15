@@ -1,5 +1,6 @@
 package br.com.webcko.academia.repository;
 
+import br.com.webcko.academia.entity.Cliente;
 import br.com.webcko.academia.entity.EntradaSaida;
 import br.com.webcko.academia.entity.Personal;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,10 +1,13 @@
 package br.com.webcko.academia.controller;
 
+import br.com.webcko.academia.entity.Cliente;
+import br.com.webcko.academia.entity.Exercicio;
 import br.com.webcko.academia.entity.Personal;
 import br.com.webcko.academia.repository.PersonalRepository;
 import br.com.webcko.academia.service.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

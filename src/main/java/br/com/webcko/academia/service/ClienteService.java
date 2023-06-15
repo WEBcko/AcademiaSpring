@@ -1,6 +1,8 @@
 package br.com.webcko.academia.service;
 
+import br.com.webcko.academia.entity.Cliente;
 import br.com.webcko.academia.entity.EntradaSaida;
+import br.com.webcko.academia.entity.Personal;
 import br.com.webcko.academia.repository.ClienteRepository;
 import br.com.webcko.academia.repository.EntradaSaidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
