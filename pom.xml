@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<scope>runtime</scope>x
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
