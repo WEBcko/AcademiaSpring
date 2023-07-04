@@ -19,7 +19,9 @@ O GYMcko é uma aplicação web desenvolvida para auxiliar no gerenciamento de u
 
 ###Tecnologias Utilizadas
 
-- **Laravel**: Framework PHP acessível e poderoso para o desenvolvimento web.
+- **SpringBoot**: Framework Java acessível e poderoso para o desenvolvimento web.
+
+- **Java**: Linguagem de Programação
 
 - **SQL**: Banco de dados relacional para armazenar os dados da aplicação.
 
@@ -29,15 +31,15 @@ O GYMcko é uma aplicação web desenvolvida para auxiliar no gerenciamento de u
 
 - **JavaScript**: Linguagem de programação utilizada para adicionar interatividade e funcionalidades adicionais ao GYMcko.
 
-###Como Executar a Aplicação
+### Acesso ao projeto
 
-Para executar a aplicação GYMcko, siga as etapas abaixo:
+Você pode [acessar o código fonte do projeto](https://github.com/AndreGChang/estacionamento) ou [baixá-lo](https://github.com/AndreGChang/estacionamento/archive/refs/heads/main.zip).
 
-1. Clone o Repositorio GYMcko: ```git clone https://github.com/seu-usuario/gymcko.git``` 
+## Abrir e rodar o projeto
 
-2. Navegue até o diretório do projeto: ```cd gymcko```
-3. Instale as dependências do Laravel utilizando o Composer: ```composer install```
-4. Instale as dependências do Vue.js utilizando o npm ou yarn: ```npm install``` ou ```yarn install```
-5. Configure o arquivo .env com as informações de conexão com o banco de dados.
-6. Execute as migrações do banco
+Após baixar o projeto, você pode abrir com o `IntelliJ IDE`. Para isso, na tela de pricipal clique em:
+
+- `Open an Existing Project ou Abrir projeto existente` (ou alguma opção similar);
+- Procure o local onde o projeto está e o selecione (Caso o projeto seja baixado via zip, é necessário extraí-lo antes de procurá-lo);
+- Por fim clique em `OK`.
 
