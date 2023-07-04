@@ -1,4 +1,4 @@
-<p align="center"><a href="" target="_blank"><img src="public\css\Group 22LOGO.png" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="" target="_blank"><img src="Group 22LOGO.png" width="400" alt="Laravel Logo"></a></p>
 
 ## Sobre GYMcko
 
