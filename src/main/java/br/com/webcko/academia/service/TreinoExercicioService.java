@@ -88,6 +88,7 @@ public class TreinoExercicioService {
 
         Assert.isTrue(treinoExercicioBanco != null, "Error registro nao encontrado");
 
+        treinoExercicioBanco.setAtivo(false);
         this.treinoExercicioRepository.delete(treinoExercicioBanco);
     }
 
