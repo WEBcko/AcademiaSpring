@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Treino extends AbstractEntity {
 
     @Getter @Setter
-    @Column(name = "codigo_ordem", nullable = false, length = 10)
+    @Column(name = "codigo_ordem", nullable = false)
     private String codigoOrdem;
 
     @Getter@Setter

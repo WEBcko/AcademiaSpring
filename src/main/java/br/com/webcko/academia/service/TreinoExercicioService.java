@@ -49,9 +49,9 @@ public class TreinoExercicioService {
 
         TreinoExercicio treinoExercicio = new TreinoExercicio();
 
-        treinoExercicio.setDificuldade(treinoExercicio.getDificuldade());
-        treinoExercicio.setPeso(treinoExercicio.getPeso());
-        treinoExercicio.setSeries(treinoExercicio.getSeries());
+        treinoExercicio.setDificuldade(treinoExercicioDto.getDificuldade());
+        treinoExercicio.setPeso(treinoExercicioDto.getPeso());
+        treinoExercicio.setSeries(treinoExercicioDto.getSeries());
 
         treinoExercicio.setIdTreino(treino);
         treinoExercicio.setIdExercicio(exercicio);
