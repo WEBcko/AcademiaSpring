@@ -1,21 +1,15 @@
 package br.com.webcko.academia.controller;
 
 
-import br.com.webcko.academia.entity.GrupoMuscular;
+import br.com.webcko.academia.DTOs.TreinoDTO;
 import br.com.webcko.academia.entity.Treino;
 import br.com.webcko.academia.repository.TreinoRepository;
 import br.com.webcko.academia.service.TreinoService;
-import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/treino")
@@ -45,7 +39,13 @@ public class TreinoController {
 
 
     @PostMapping
-    public ResponseEntity<?> cadastrar (@RequestBody final Treino treino){
+    public ResponseEntity<?> cadastrar (@RequestBody final TreinoDTO treino){
+
+        System.out.println();
+        System.out.println(treino.getCodigoOrdem());
+        System.out.println("USUARIO");
+        System.out.println(treino.getIdUsuario().getId());
+        System.out.println(treino.getIdUsuario());
         try{
             this.treinoService.cadastrar(treino);
             return ResponseEntity.ok("Registro salvo com sucesso");
@@ -54,8 +54,8 @@ public class TreinoController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Treino treino){
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar (@PathVariable("id") final Long id, @RequestBody final Treino treino){
         try{
 
             this.treinoService.editar(id,treino);
@@ -70,12 +70,12 @@ public class TreinoController {
     @DeleteMapping
     public ResponseEntity<?> deletar (@RequestParam("id") final Long id) {
 
-            try {
-                this.treinoService.deletar(id);
-                return ResponseEntity.ok().body("Registro deletado com sucesso");
-            } catch (DataIntegrityViolationException e) {
-                return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
-            }
+        try {
+            this.treinoService.deletar(id);
+            return ResponseEntity.ok().body("Registro deletado com sucesso");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.internalServerError().body("Error " + e.getCause().getCause().getMessage());
+        }
 
     }
 

@@ -13,4 +13,9 @@ public class Treino extends AbstractEntity {
     @Column(name = "codigo_ordem", nullable = false, length = 10)
     private String codigoOrdem;
 
+    @Getter@Setter
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario idUsuario;
+
 }

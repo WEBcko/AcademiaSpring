@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
-
 @Controller
 @RequestMapping(value = "/api/configuracao")
 public class ConfiguracaoController {
@@ -39,7 +37,7 @@ public class ConfiguracaoController {
     @PutMapping
     public ResponseEntity<?> editar (@RequestParam("id") final Long id, @RequestBody final Configuracao configuracao){
         try{
-           this.configuracaoService.editar(id,configuracao);
+            this.configuracaoService.editar(id,configuracao);
             return ResponseEntity.ok().body("Registro atualizado com sucesso");
         }catch(DataIntegrityViolationException e){
             return ResponseEntity.badRequest().body("Error "  + e.getCause().getCause().getMessage());

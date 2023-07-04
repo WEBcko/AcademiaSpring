@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -39,4 +38,10 @@ public abstract class AbstractEntity {
                 this.dataAtualizado = LocalDateTime.now();
         }
 
+        @Override
+        public String toString() {
+                return "AbstractEntity{" +
+                        "id=" + id +
+                        '}';
+        }
 }

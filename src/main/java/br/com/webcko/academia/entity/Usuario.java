@@ -1,24 +1,50 @@
 package br.com.webcko.academia.entity;
 
+import br.com.webcko.academia.DTOs.LoginRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 
-@MappedSuperclass
-public abstract class Usuario extends AbstractEntity {
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Collection;
 
-        @Getter @Setter
+@Entity
+@Table(name = "usuarios", schema = "public")
+public class Usuario extends AbstractEntity{
+
+        @Getter
+        @Setter
         @Column(name = "nome", nullable = false, length = 100)
         private String nome;
 
         @Getter @Setter
-        @Column(name = "telefone", nullable = false, unique = true, length = 30)
+        @Column(name = "peso")
+        private BigDecimal peso;
+
+        @Getter @Setter
+        @Column(name = "altura")
+        private BigDecimal altura;
+
+        @Getter @Setter
+        @Column(name = "cep", length = 10)
+        private String cep;
+
+        @Getter @Setter
+        @Column(name = "numero_casa")
+        private BigDecimal numeroCasa;
+
+        @Getter @Setter
+        @Column(name = "data_nascimento", columnDefinition = "DATE")
+        private LocalDate dataNascimento;
+
+        @Getter @Setter
+        @Column(name = "telefone", nullable = false, length = 30)
         private String telefone;
 
         @Getter @Setter
-        @Column(name = "cpf", nullable = false, unique = true, length = 16)
+        @Column(name = "cpf", unique = true, length = 16)
         private String cpf;
 
         @Getter @Setter
@@ -29,15 +55,16 @@ public abstract class Usuario extends AbstractEntity {
         @Column(name = "senha", nullable = false, length = 100)
         private String senha;
 
-        @PrePersist
-        private void prePersisteUser(){
-                this.dataCadastrado = LocalDateTime.now();
-                this.ativo=true;
-        }
+        @Getter @Setter
+        @Enumerated(EnumType.STRING)
+        @Column(name = "role", nullable = false)
+        private UsuarioRole role;
 
-        @PreUpdate
-        private void preUpdateUser(){
-                this.dataAtualizado = LocalDateTime.now();
+        public static Usuario fromLoginRequest(LoginRequest loginRequest) {
+                Usuario usuario = new Usuario();
+                usuario.setNome(loginRequest.getUsername());
+                usuario.setSenha(loginRequest.getSenha());
+                return usuario;
         }
 
 }

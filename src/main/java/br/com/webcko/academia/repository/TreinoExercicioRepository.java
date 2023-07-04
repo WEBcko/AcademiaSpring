@@ -20,13 +20,13 @@ public interface TreinoExercicioRepository extends JpaRepository<TreinoExercicio
     public List<TreinoExercicio> findExercicio(@Param("idExercicio") final Exercicio id_exercicio);
 
     /**
-    @Query("from TreinoExercicio where dificildade = :dificuldade")
-    public List<TreinoExercicio> findDificuldade(@Param("dificuldade") final String dificuldade);
+     @Query("from TreinoExercicio where dificildade = :dificuldade")
+     public List<TreinoExercicio> findDificuldade(@Param("dificuldade") final String dificuldade);
 
-    @Query("from TreinoExercicio where peso = :peso")
-    public List<TreinoExercicio> findPeso(@Param("peso") final Float peso);
+     @Query("from TreinoExercicio where peso = :peso")
+     public List<TreinoExercicio> findPeso(@Param("peso") final Float peso);
 
-    @Query("from TreinoExercicio where series = :series")
-    public List<TreinoExercicio> findSeries(@Param("series") final Integer series);
-    */
+     @Query("from TreinoExercicio where series = :series")
+     public List<TreinoExercicio> findSeries(@Param("series") final Integer series);
+     */
 }

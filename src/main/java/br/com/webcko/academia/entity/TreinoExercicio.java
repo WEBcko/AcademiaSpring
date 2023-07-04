@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "treinos_exercicios", schema = "public")
 public class TreinoExercicio extends AbstractEntity {
@@ -22,17 +24,17 @@ public class TreinoExercicio extends AbstractEntity {
 
     @Getter
     @Setter
-    @Column(name = "dificuldade", nullable = false)
-    private String dificuldade;
+    @Column(name = "dificuldade")
+    private BigDecimal dificuldade;
 
     @Getter
     @Setter
-    @Column(name="peso", nullable = false)
-    private Float peso;
+    @Column(name="peso")
+    private BigDecimal peso;
 
     @Getter
     @Setter
     @Column(name = "series")
-    private Integer series;
+    private BigDecimal series;
 
 }
